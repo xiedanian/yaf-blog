@@ -1,0 +1,11 @@
+{%include file='public/header.html' title=$tpl.data.articleInfo.title %}
+{%include file='public/menu.html'%}
+
+    <section class="wrapper">
+        <article class="markdown-body entry-content" itemprop="text">
+            <h1 id="-atom-">{%$tpl.data.articleInfo.title%}</h1>
+            {%$tpl.data.articleInfo.content%}
+        </article>
+    </section>
+
+{%include file='public/footer.html'%}

@@ -1,0 +1,85 @@
+{%include file='admin/public/header.html'%}
+{%include file='admin/public/menu.html'%}
+
+<script type="text/javascript" src="{%PLUGIN%}/alioss/lib/plupload.full.min.js"></script>
+<script type="text/javascript" src="{%PLUGIN%}/alioss/upload.js"></script>
+
+
+<link rel="stylesheet" href="{%PLUGIN%}/kindeditor/themes/default/default.css" />
+<script charset="utf-8" src="{%PLUGIN%}/kindeditor/kindeditor-all-min.js"></script>
+<script charset="utf-8" src="{%PLUGIN%}/kindeditor/lang/zh-CN.js"></script>
+<script>
+    var editor;
+    KindEditor.ready(function(K) {
+        editor = K.create('textarea[name="content"]', {
+            allowFileManager : true
+        });
+        K('input[name=getHtml]').click(function(e) {
+            alert(editor.html());
+        });
+    });
+</script>
+
+<div class="right">
+
+    <h4>添加文章</h4><hr/>
+
+    <form class="form-container">
+
+        <div class="form-group">
+            <span>分类</span>
+            <select class="form-control" id="inputCategoryId" name="category_id" style="width:600px;display: inline">
+                <option value="0">请选择分类</option>
+                {%foreach $tpl.data.category_list as $item%}
+                    <option style="text-indent:{%$item.Count%}*20px>" value="{%$item.id%}">{%if $item.Count neq 1%}| -- {%/if%}{%$item.name%}</option>
+                {%/foreach%}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <span>标题</span>
+            <input type="text" class="form-control" id="inputTitle" name="title" placeholder="" style="width:600px">
+        </div>
+
+        <div class="form-group">
+            <span>描述</span>
+            <textarea name=description class="form-control" id="inputDesc" style="width:600px;height:120px"></textarea>
+        </div>
+
+        <div class="form-group">
+            <span>正文</span>
+            <textarea name="content" class="form-control" id="inputContent" style="width:1100px;height:400px;visibility:hidden;"></textarea>
+        </div>
+
+        <button type="button" id="submit" class="btn btn-primary">发布</button>
+
+    </form>
+
+</div>
+
+<script>
+
+    $("#submit").click(function(){
+        var category_id = $('#inputCategoryId option:selected').val();
+        var title = $('#inputTitle').val();
+        var desc = $('#inputDesc').val();
+        var content = editor.html();
+        var data = {"category_id":category_id,"title":title,"desc":desc,"content":content};
+        $.ajax({
+            url:"/admin/article/add",
+            type:'POST',
+            data:data,
+            success:function(obj){
+                if(obj.errno!=0){
+                    alert(obj.error);
+                }else{
+                    window.location.href = '/admin/article/list';
+                }
+            }
+        });
+        return false;
+    });
+</script>
+
+{%include file='public/footer.html'%}
+

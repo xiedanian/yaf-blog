@@ -1,0 +1,72 @@
+<div class="subnav navbar-fixed-top">
+  <div class="accordion">
+    <!--<ul id="menu">
+    	<volist name="menu" id="list">
+		      <li menuId="<{$list.id}>" class="subnav-title"> 
+		      	<div class="subnav-title bold"><span class="<{$list.ico}>"></span>&nbsp;&nbsp;<{$list.title}></div>
+		        	<ul style="display:none;">
+			        	<volist name="list.childs" id="info">
+			         	 	<li><a href="__MODULE__/<{$info.url}>"><{$info.title}></a></li>
+			         	</volist>
+			        </ul>
+		      </li>
+      	</volist>
+    </ul>-->
+
+      <ul id="menu">
+
+          <li menuId="1" class="subnav-title">
+              <div class="subnav-title bold"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;文章管理</div>
+              <ul style="display:none;">
+                  <li><a href="/admin/article/list">文章列表</a></li>
+                  <li><a href="/admin/article/add">添加文章</a></li>
+              </ul>
+          </li>
+
+
+          <li menuId="2" class="subnav-title">
+              <div class="subnav-title bold"><span class="glyphicon glyphicon-picture"></span>&nbsp;&nbsp;相册管理</div>
+              <ul style="display:none;">
+                  <li><a href="/admin/album/list">相册列表</a></li>
+                  <li><a href="/admin/album/add">添加相册</a></li>
+              </ul>
+          </li>
+
+          <li menuId="3" class="subnav-title">
+              <div class="subnav-title bold"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;用户管理</div>
+              <ul style="display:none;">
+                  <li><a href="/admin/user/list">用户列表</a></li>
+              </ul>
+          </li>
+
+          <li menuId="4" class="subnav-title">
+              <div class="subnav-title bold"><span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;系统设置</div>
+              <ul style="display:none;">
+                  <li><a href="/admin/admin/adminlist">管理员列表</a></li>
+                  <li><a href="/admin/admin/rolelist">权限管理</a></li>
+                  <li><a href="/admin/admin/menulist">菜单管理</a></li>
+              </ul>
+          </li>
+
+      </ul>
+
+  </div>
+</div>
+<script type="text/javascript">	
+	$('.subnav-title').click(function(){
+	  		var id = $(this).attr("menuId");
+	  		$.cookie('menuId',id,{path: '/' });
+	    	$('#menu ul:visible').slideUp('normal');
+	    	//展开自身ul
+	    	var checkElement = $(this).find('ul');
+	    	checkElement.slideDown('normal');
+	});
+	$(document).ready(function(){
+		var cookie = $.cookie('menuId');
+		if(cookie.length > 0){
+			//定位div
+			// alert(parseInt(cookie)-1);
+			$('#menu').children('li').eq(parseInt(cookie)-1).children('ul').slideDown();
+		}
+	});
+</script>

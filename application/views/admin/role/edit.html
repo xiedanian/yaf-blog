@@ -1,0 +1,33 @@
+{%include file='admin/public/header.html'%}
+{%include file='admin/public/menu.html'%}
+
+<script type="text/javascript" src="{%PLUGIN%}/alioss/lib/plupload.full.min.js"></script>
+<script type="text/javascript" src="{%PLUGIN%}/alioss/upload.js"></script>
+
+<div class="right">
+
+    <h4>编辑角色</h4><hr/>
+
+    <form class="form-container" method="POST">
+
+        <div class="form-group">
+            <span>名称</span>
+            <input type="text" class="form-control" id="inputRoleName" name="role_name" value="{%$tpl.data.role_name%}" style="width:600px">
+        </div>
+
+        <div class="form-group">
+            <span>备注</span>
+            <input type="text" class="form-control" id="inputRemark" name="remark" value="{%$tpl.data.remark%}"  style="width:600px">
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-5">
+                <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-ok"></i> 提 交</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="reset" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i> 重 置</button>
+            </div>
+        </div>
+    </form>
+</div>
+{%include file='public/footer.html'%}
+

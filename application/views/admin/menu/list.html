@@ -1,0 +1,104 @@
+{%include file='admin/public/header.html'%}
+{%include file='admin/public/menu.html'%}
+
+<div class="right">
+    <a href="/admin/admin/menuAdd"><button type="button" class="btn btn-info">添加菜单</button></a><hr/>
+    <div id="cdlist-wrap" ></div>
+</div>
+
+<script>
+
+    var DEFAULT_IMAGE = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAMAAADzN3VRAAAAk1BMVEUAAAD////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////ROyVeAAAAMHRSTlMA3remQMMv+eu2RzznyrysmJNlRA8G7+TVv7KnooyEelopIxMK4F5JNAH284d0VR38f9wYAAAA2UlEQVQoz52Q6Q6CMBCEC7a2pdy3HIKA99X3fzq3+EMQSIybdLLNl53MLvq5oizRnrPESBt7M0tKgsR1N2e2vyPM5oindci1zlOwlRg1tJ6CSj5QVFhTgKUP4dipC8MvYusgR9PJuF210HY4CAID4vhSwPdce+XW3audcmoyxlLjQKvPeJuA0IPAWDiSekPnHJ7W9osQMTpSrMhJtY47jmkqslbtajXOSZaIry0RwpfI7eOWF0MQWkVPptmOMgA1w/7+cT0MIBvQOM10ricbi3D9Xdy+lBH6p15BIw0F5vgmRQAAAABJRU5ErkJggg==';
+
+    // 初始化分页插件
+    var pg = window.pg = new CdList.addons.Pagination({
+        historyEnable: 1,
+        getSetting: function (json) {
+            return {
+                total: json.data.page_total
+            }
+        }
+    });
+
+    var cdList = window.cdlist = new CdList({
+        tableClass: 'table table-striped back-table',
+        isTable: 1,
+        addons: [pg],
+
+        getUrl: function (data) {
+            //debugger;
+            return '/admin/admin/menulist?display=json&page=' + (data.pagination + 1);
+        },
+
+        headerRow: function () {
+            return '<tr><th>#</th><th>菜单名称</th><th>是否菜单选项</th><th>URI</th><th>权重</th><th>备注</th><th>创建时间</th><th>修改时间</th><th>操作</th></tr>'
+        },
+
+        rows: function (item) {
+            item.create_time=handleTime(item.create_time);
+            item.update_time=handleTime(item.update_time);
+
+            if(item.is_menu == 1){
+                item.is_menu = '<span class="glyphicon glyphicon glyphicon-ok">';
+            }else {
+                item.is_menu = '<span class="glyphicon glyphicon glyphicon-remove">';
+            }
+
+            var html = ['<tr>',
+                '<td>'+ item.menu_id +'</td>',
+                '<td>'+ item.name +'</td>',
+                '<td>'+ item.is_menu +'</td>',
+                '<td>'+ item.uri +'</td>',
+                '<td>'+ item.weight +'</td>',
+                '<td>'+ item.remark +'</td>',
+                '<td>'+ item.create_time +'</td>',
+                '<td>'+ item.update_time +'</td>',
+                '<td><a href="/admin/admin/menuEdit?menu_id='+ item.menu_id +'">编辑</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript:void(0)" onclick=menuDel('+item.menu_id+')>删除</a></td>',
+                '</tr>'].join('');
+            return html;
+        },
+
+        getRowsData: function (json) {
+            return json.data;
+        }
+    }, '#cdlist-wrap');
+    cdList.getList();
+
+    function handleTime(time) {
+        var   d = new Date(parseInt(time*1000));
+        var   year=d.getFullYear();
+        var   month=d.getMonth()+1;
+        var   date=d.getDate();
+        var   hour=d.getHours();
+        var   minute=d.getMinutes();
+        var   second=d.getSeconds();
+        //return year+"-"+month+"-"+date+"   "+hour+":"+minute+":"+second;
+        return year+"-"+month+"-"+date+"   "+hour+":"+minute+"";
+    }
+
+    function menuDel($this){
+
+        var tip = confirm('确认要删除该菜单吗？');
+        if(tip == false){
+            return
+        }
+        var menu_id = $this;
+        var data = {"menu_id":menu_id};
+        $.ajax({
+            url:"/admin/admin/menuDel",
+            type:'GET',
+            data:data,
+            success:function(obj){
+                if(obj.errno!=0){
+                    alert(obj.error);
+                }else{
+                    window.location.href = '/admin/admin/menulist';
+                }
+            }
+        });
+        return false;
+    }
+
+</script>
+{%include file='public/footer.html'%}
+

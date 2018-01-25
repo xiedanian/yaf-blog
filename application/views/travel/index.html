@@ -1,0 +1,16 @@
+{%include file='public/header.html' title='大年照相馆'%}
+{%include file='public/menu.html'%}
+
+<div class="travle_list">
+
+{%foreach $tpl.data.albumList as $item%}
+    <div class="list">
+    <a href="/travel/detail?album_id={%$item.album_id%}">
+        <img src="{%$item.icon_thumbnail%}" alt="" class="img-thumbnail">
+        <span>{%$item.title%}</span>
+    </a>
+</div>
+{%/foreach%}
+
+</div>
+{%include file='public/footer.html'%}

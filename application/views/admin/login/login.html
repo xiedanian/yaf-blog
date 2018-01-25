@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>谢大年的博客</title>
+    <link rel="stylesheet" type="text/css" href="{%PUBLIC_CSS%}/style.css">
+    <link rel="stylesheet" type="text/css" href="{%PUBLIC_CSS%}/bootstrap.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.1.1/jquery.js"></script>
+</head>
+<body>
+<div class="panel panel-primary" style="width:40%;margin: auto;margin-top:100px;">
+    <div class="panel-heading" align="center"><h2><img src="{%PUBLIC_IMG%}/nian.jpeg" width="80" height="80">&nbsp;&nbsp;谢大年的博客</h2></div>
+    <div class="panel-body">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label for="inputUsername" class="col-sm-2 control-label">用户名</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="username" id="inputUsername" placeholder="用户名">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword" class="col-sm-2 control-label">密码</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" name="password" id="inputPassword" placeholder="密码">
+                </div>
+            </div>
+            <!-- <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox">记住用户名
+                  </label>
+                </div>
+              </div>
+            </div> -->
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button id="submit" type="submit" class="btn btn-primary">登录</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+
+    $("#submit").click(function(){
+        var username = $('#inputUsername').val();
+        var password = $('#inputPassword').val();
+        var referrer = '';
+
+        if(!username || !password){
+            alert("请输入用户跟密码");
+            return false;
+        }
+        var data = {"username":username,"password":password,"referrer":referrer};
+        $.ajax({
+            url:"/admin/pass/login",
+            type:'POST',
+            data:data,
+            success:function(obj){
+                if(obj.errno!=0){
+                    alert(obj.error);
+                }else{
+                    window.location.href = "/admin/index/index";
+                }
+            }
+        });
+        return false;
+    });
+</script>
+
+</body>
+</html>
