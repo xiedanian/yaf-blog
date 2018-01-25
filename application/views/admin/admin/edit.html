@@ -1,0 +1,54 @@
+{%include file='admin/public/header.html'%}
+{%include file='admin/public/menu.html'%}
+
+<script type="text/javascript" src="{%PLUGIN%}/alioss/lib/plupload.full.min.js"></script>
+<script type="text/javascript" src="{%PLUGIN%}/alioss/upload.js"></script>
+
+<div class="right">
+
+    <h4>编辑管理员</h4><hr/>
+
+    <form class="form-container" method="POST">
+        <div class="form-group">
+            <span>角色</span>
+            <select class="form-control" name="role_id" style="width:600px;display: inline">
+                <option value="0">请选择角色</option>
+                {%foreach from=$tpl.data.roles item="vo"%}
+                    <option value="{%$vo.role_id%}"{%if $vo.role_id eq $tpl.data.admin.role_id%} selected{%/if%}>{%$vo.role_name%}</option>
+                {%/foreach%}
+
+            </select>
+        </div>
+
+        <div class="form-group">
+            <span>账号</span>
+            <input type="text" class="form-control" id="inputTitle" name="email" value="{%$tpl.data.admin.email%}" style="width:600px">
+        </div>
+
+        <div class="form-group">
+            <span>密码</span>
+            <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="请输入密码，留空表示不修改" style="width:600px">
+        </div>
+
+        {%if $tpl.data.userInfo.admin_id eq 1%}
+            <div class="form-group">
+                <span>超管</span>
+                <label class="radio-inline">
+                    <input type="radio" name="is_supper" value="1"{%if $tpl.data.admin.is_supper eq 1%} checked{%/if%}> 是
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="is_supper" value="0"{%if $tpl.data.admin.is_supper neq 1%} checked{%/if%}> 否
+                </label>
+            </div>
+        {%/if%}
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-5">
+                <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-ok"></i> 提 交</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="reset" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i> 重 置</button>
+            </div>
+        </div>
+    </form>
+</div>
+{%include file='public/footer.html'%}
+

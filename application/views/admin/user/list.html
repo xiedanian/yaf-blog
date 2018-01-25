@@ -1,0 +1,135 @@
+{%include file='admin/public/header.html'%}
+{%include file='admin/public/menu.html'%}
+
+<div class="right">
+    <!--<table class="table table-striped">
+        <thead>
+        <tr>
+            <th>昵称</th>
+            <th>用户名</th>
+            <th>邮箱</th>
+            <th>电话</th>
+            <th>创建时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        {%foreach $tpl.data.userList as $item%}
+        <tr>
+            <td>{%$item.nick%}</td>
+            <td>{%$item.user_name%}</td>
+            <td>{%$item.email%}</td>
+            <td>{%$item.phone%}</td>
+            <td>{%$item.create_time|date_format:'%Y-%m-%d %H:%M'%}</td>
+        </tr>
+        {%/foreach%}
+        </tbody>
+    </table>-->
+
+    <div id="cdlist-wrap" ></div>
+
+</div>
+
+<script>
+
+    var DEFAULT_IMAGE = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAMAAADzN3VRAAAAk1BMVEUAAAD////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////ROyVeAAAAMHRSTlMA3remQMMv+eu2RzznyrysmJNlRA8G7+TVv7KnooyEelopIxMK4F5JNAH284d0VR38f9wYAAAA2UlEQVQoz52Q6Q6CMBCEC7a2pdy3HIKA99X3fzq3+EMQSIybdLLNl53MLvq5oizRnrPESBt7M0tKgsR1N2e2vyPM5oindci1zlOwlRg1tJ6CSj5QVFhTgKUP4dipC8MvYusgR9PJuF210HY4CAID4vhSwPdce+XW3audcmoyxlLjQKvPeJuA0IPAWDiSekPnHJ7W9osQMTpSrMhJtY47jmkqslbtajXOSZaIry0RwpfI7eOWF0MQWkVPptmOMgA1w/7+cT0MIBvQOM10ricbi3D9Xdy+lBH6p15BIw0F5vgmRQAAAABJRU5ErkJggg==';
+
+    // 初始化分页插件
+    var pg = window.pg = new CdList.addons.Pagination({
+        historyEnable: 1,
+        getSetting: function (json) {
+            return {
+                total: json.data.page_total
+            }
+        }
+    });
+
+    // 初始化搜索插件
+    /*var search = window.search = new CdList.addons.Search({
+        historyEnable: 1,
+        placeholder: '输入您想查询的内容'
+    });*/
+
+
+    /*var filter = window.filter = new CdList.addons.Filter({
+        // 使用 li 进行展示
+        line: 1,
+        filters: [
+            {
+                label: '服务类型：',
+                name: 'types',
+                datas: [
+                    { name: '不限', value: '' },
+                    { name: '餐饮服务', value: '05' },
+                    { name: '购物服务', value: '06' },
+                    { name: '医疗服务', value: '09' },
+                ]
+            },
+            {
+                label: '城市编码：',
+                name: 'city',
+                datas: [
+                    { name: '北京', value: 'beijing' },
+                    { name: '上海', value: 'shanghai' },
+                    { name: '深圳', value: 'shenzhen' },
+                    { name: '广州', value: 'guangzhou' },
+                ]
+            }
+        ]
+    });*/
+
+    var cdList = window.cdlist = new CdList({
+        tableClass: 'table table-striped back-table',
+        isTable: 1,
+        addons: [pg],
+
+        getUrl: function (data) {
+            //debugger;
+            return '/admin/user/list?display=json&page=' + (data.pagination + 1);
+        },
+
+        headerRow: function () {
+            return '<tr><th>昵称</th><th>用户名</th><th>邮箱</th><th>电话</th><th>验证状态</th><th>创建时间</th></tr>'
+        },
+
+        rows: function (item) {
+            item.create_time=handleTime(item.create_time);
+
+            /*var html = ['<li>',
+                '<div class="img" style="background-image:url(' + (item.photos[0] && (item.photos[0].url + '?operate=merge&w=160&h=150&position=5') || DEFAULT_IMAGE) + ')"/>',
+                '<div class="item-main">',
+                '<div class="item-name">' + item.name + '</div>',
+                '<div class="item-address">详细地址' + item.address + '</div>',
+                '</div>',
+                '</li>'].join('');*/
+
+            var html = ['<tr>',
+                '<td>'+ item.nick +'</td>',
+                '<td>'+ item.user_name +'</td>',
+                '<td>'+ item.email +'</td>',
+                '<td>'+ item.phone +'</td>',
+                '<td>通过</td>',
+                '<td>'+ item.create_time +'</td>',
+                '</tr>'].join('');
+            return html;
+        },
+
+        getRowsData: function (json) {
+            return json.data.userList;
+        }
+    }, '#cdlist-wrap');
+    cdList.getList();
+
+    function handleTime(time) {
+        var   d = new Date(parseInt(time*1000));
+        var   year=d.getFullYear();
+        var   month=d.getMonth()+1;
+        var   date=d.getDate();
+        var   hour=d.getHours();
+        var   minute=d.getMinutes();
+        var   second=d.getSeconds();
+        //return year+"-"+month+"-"+date+"   "+hour+":"+minute+":"+second;
+        return year+"-"+month+"-"+date+"   "+hour+":"+minute+"";
+    }
+</script>
+{%include file='public/footer.html'%}
+

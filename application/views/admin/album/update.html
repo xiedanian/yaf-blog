@@ -1,0 +1,89 @@
+{%include file='admin/public/header.html'%}
+{%include file='admin/public/menu.html'%}
+
+<script type="text/javascript" src="{%PLUGIN%}/alioss/lib/plupload.full.min.js"></script>
+<script type="text/javascript" src="{%PLUGIN%}/alioss/upload.js"></script>
+
+<div class="right">
+
+    <h4>编辑相册</h4><hr/>
+
+    <form class="form-container">
+
+        <div class="form-group">
+            <span>封面</span>
+            <input type="text" class="form-control" id="inputIcon" name="icon" placeholder="" value="{%$tpl.data.icon%}">
+            <button type="button" id="file_upload1" for="inputIcon"  class="btn btn-success">上传</button>
+        </div>
+
+        <div class="form-group">
+            <span>标题</span>
+            <input type="text" class="form-control" id="inputTitle" name="title" placeholder="" value="{%$tpl.data.title%}">
+        </div>
+
+        <div class="form-group">
+            <span>描述</span>
+            <textarea name=intro class="form-control" id="inputIntro" rows="10" cols="80">{%$tpl.data.intro%}</textarea>
+        </div>
+
+        <button type="button" id="submit" class="btn btn-primary">更新</button>
+
+    </form>
+
+</div>
+
+<script>
+
+    //初始化上传插件
+    AliOssUpload({
+        serverUrl : '/admin/common/autograph',
+        upload_button : 'file_upload1',
+        extensions : 'jpg,gif,png,bmp',
+        multi:false,
+        max : '10mb',
+        added: function (file_arr) {
+        },
+        progress:function(name, percent, file){
+            $("#file_upload1").text(percent+'%');
+        },
+        success : function(file_url,file){
+            var id = $("#file_upload1").attr("for");
+            $("#file_upload1").text("上传");
+            completeInput(file_url);
+        },
+        error : function(msg){
+            console.log(msg);
+        }
+    })
+
+    function completeInput(file_url) {
+        $('input[name=icon]').val(file_url);
+    }
+
+
+    $("#submit").click(function(){
+        var icon = $('#inputIcon').val();
+        var title = $('#inputTitle').val();
+        var intro = $('#inputIntro').val();
+        var album_id = {%$tpl.data.album_id%};
+        var data = {"album_id":album_id,"icon":icon,"title":title,"intro":intro};
+        $.ajax({
+            url:"/admin/album/update",
+            type:'POST',
+            data:data,
+            success:function(obj){
+                if(obj.errno!=0){
+                    alert('提交失败');
+                }else{
+                    window.location.href = '/admin/album/list';
+                }
+            }
+        });
+        return false;
+    });
+
+
+</script>
+
+{%include file='public/footer.html'%}
+

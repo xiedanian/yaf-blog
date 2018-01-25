@@ -1,0 +1,69 @@
+{%include file='admin/public/header.html'%}
+{%include file='admin/public/menu.html'%}
+
+<script type="text/javascript" src="{%PLUGIN%}/alioss/lib/plupload.full.min.js"></script>
+<script type="text/javascript" src="{%PLUGIN%}/alioss/upload.js"></script>
+
+<div class="right">
+
+    <h4>编辑菜单</h4><hr/>
+
+    <form class="form-container" method="POST">
+
+        <div class="form-group">
+            <span>ID&nbsp;&nbsp;&nbsp;</span>
+            <input type="text" name="" value="{%$tpl.data.menu.menu_id%}" disabled class="form-control" style="width:600px">
+        </div>
+
+        <div class="form-group">
+            <span>父级</span>
+            <select class="form-control" name="pid" style="width:600px;display: inline">
+                <option value="0">顶级菜单</option>
+                {%foreach from=$tpl.data.menus item="vo"%}
+                <option value="{%$vo.menu_id%}"{%if $tpl.data.menu.pid eq $vo.menu_id%} selected{%/if%}>{%$vo.prefix%}{%$vo.name%}</option>
+                {%/foreach%}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <span>名称</span>
+            <input type="text" class="form-control" id="inputName" name="name" value="{%$tpl.data.menu.name%}"  placeholder="菜单名称" style="width:600px">
+        </div>
+
+        <div class="form-group">
+            <span>权重</span>
+            <input type="text" class="form-control" id="inputeight" name="weight" value="{%$tpl.data.menu.weight%}" placeholder="权重" style="width:600px">
+        </div>
+
+        <div class="form-group">
+            <span>是否菜单显示</span>
+            <label class="radio-inline">
+                <input type="radio" name="is_menu" value="1"{%if $tpl.data.menu.is_menu eq 1%} checked{%/if%}> 是
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="is_menu" value="0"{%if $tpl.data.menu.is_menu neq 1%} checked{%/if%}> 否
+            </label>
+        </div>
+
+
+        <div class="form-group">
+            <span>URI&nbsp;</span>
+            <input type="text" class="form-control" id="inputUri" name="uri" value="{%$tpl.data.menu.uri%}" placeholder="操作" style="width:600px">
+        </div>
+
+        <div class="form-group">
+            <span>备注</span>
+            <input type="text" class="form-control" id="inputRemark" name="remark" value="{%$tpl.data.menu.remark%}" placeholder="备注" style="width:600px">
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-5">
+                <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-ok"></i> 提 交</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="reset" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i> 重 置</button>
+            </div>
+        </div>
+    </form>
+</div>
+{%include file='public/footer.html'%}
+

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>谢大年--博客后台</title>
+<link rel="stylesheet" type="text/css" href="{%PUBLIC_CSS%}/style.css">
+<link rel="stylesheet" type="text/css" href="{%PUBLIC_CSS%}/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="{%PUBLIC_CSS%}/cdlist.css"/>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.1.1/jquery.js"></script>
+<script type="text/javascript" src="{%PUBLIC_JS%}/jquery.cookie.js"></script>
+<script type="text/javascript" src="{%PUBLIC_JS%}/bootstrap.js"></script>
+<script type="text/javascript" src="{%PUBLIC_JS%}/collapse.js"></script>
+<script type="text/javascript" src="{%PUBLIC_JS%}/bootstrap-typeahead.js"></script>
+<script type="text/javascript" src="{%PUBLIC_JS%}/cdlist.js"></script>
+<script type="text/javascript" src="{%PUBLIC_JS%}/swig.min.js"></script>
+<link rel="shortcut icon" type="image/png" href="{%PUBLIC_IMAGES%}/favicon.ico" sizes="16x16">
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container-fluid"> 
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+        <!--<a href="__MODULE__/index"><img style="margin:5px 5px 0px 0px;" class="l" src="{%PUBLIC_IMG%}/google.png" width="200" height="40"/></a>-->
+      <a class="navbar-brand" style="width: 270px" href="/admin/index/index">CMS通用后台</a>
+    </div>
+    
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/admin/index/index">管理平台</a></li>
+        <!-- <li><a href="javascript:;" target="_blank">功能介绍</a></li>
+        <li><a href="javascript:;" target="_blank">使用指南</a></li>
+        <li><a href="javascript:;" target="_blank">帮助中心</a></li>
+        <li><a href="<{:U('System/index')}>">系统设置</a></li> -->
+      </ul>
+      
+       <ul class="nav navbar-nav navbar-right">
+        <li><a href="javascript:;">您好,&nbsp;&nbsp;{%$tpl.data.userInfo.email%}&nbsp;欢迎使用博客系统</a></li>
+        <li><a href="/admin/admin/adminEdit?admin_id={%$tpl.data.userInfo.admin_id%}">[修改信息]</a></li>
+        <li><a href="/admin/pass/logout">[注销退出]</a></li>
+      </ul>
+
+   <!--   <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"></a></li>
+        <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">用户 <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+              <li><a href="#"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;你好，谢大年</a></li>
+            <li><a href="<{:U('User/updateuser',array('id'=>$_SESSION['uid']))}>">修改昵称</a></li>
+            <li><a href="<{:U('User/changeInfo')}>">修改账号信息</a></li>
+            <li class="divider"></li>
+            <li><a href="<{:U('login/logout')}>"><span class="glyphicon glyphicon-off"></span>&nbsp;&nbsp;退出</a></li>
+          </ul>
+        </li>
+      </ul>-->
+    </div>
+    <!-- /.navbar-collapse --> 
+  </div>
+  <!-- /.container-fluid --> 
+</nav>

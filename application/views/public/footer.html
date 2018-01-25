@@ -1,0 +1,50 @@
+
+
+<script>
+    function initContent (){
+        $('.main-content').css({
+            'min-height': $(window).height()
+        });
+        $('.wrapper').css({
+            'min-height': $(window).height() - 70
+        });
+    }
+    initContent();
+
+    $('.toggle-btn').click(function(){
+        var body = $('body');
+        var bodyposition = body.css('position');
+
+        if(bodyposition != 'relative') {
+            if(!body.hasClass('left-side-collapsed')) {
+                body.addClass('left-side-collapsed');
+
+                $(this).addClass('menu-collapsed');
+            } else {
+                body.removeClass('left-side-collapsed chat-view');
+
+                $(this).removeClass('menu-collapsed');
+            }
+        } else {
+            if(body.hasClass('left-side-show'))
+                body.removeClass('left-side-show');
+            else
+                body.addClass('left-side-show');
+            initContent();
+        }
+    });
+
+    $(window).resize(function(){
+        if($('body').css('position') == 'relative') {
+            $('body').removeClass('left-side-collapsed');
+        } else {
+            $('body').css({left: '', marginRight: ''});
+        }
+
+        initContent();
+    });
+</script>
+
+</div>
+</body>
+</html>

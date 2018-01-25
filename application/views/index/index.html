@@ -1,0 +1,39 @@
+{%include file='public/header.html'%}
+{%include file='public/menu.html'%}
+
+    <section class="wrapper" style="min-height: 712px;">
+        {%foreach $tpl.data.article_list as $item%}
+        <article class="post">
+            <header class="post-header">
+                <h1 class="post-title" title="{%$item.title%}"> <a class="post-title-link" href="/blog/detail?id={%$item.id%}" target="_blank" title="{%$item.title%}">{%$item.title%}</a> </h1>
+                <div class="text clear_fix">
+                    <span class="post-time fl"><i class="glyphicon glyphicon-time"></i> {%$item.create_time|date_format:"%Y-%m-%d"%}</span>
+                    <ul class="artc_lable fl">
+                        <li class="color9"><span>电台</span></li>
+                        <li class="color0"><span>web</span></li>
+                        <li class="color0"><span>编辑器</span></li>
+                        <li class="color2"><span>vim</span></li>
+                        <li class="color6"><span>前端</span></li>
+                    </ul>
+                </div>
+            </header>
+            <div class="post-body">
+                {%if $item.cover neq '0'%}
+                    <a class="post-title-link" href="/blog/detail?id={%$item.id%}" target="_blank" title="{%$item.title%}"><img src="{%$item.cover%}" width="500" height="280" alt=""></a>
+                {%/if%}
+                <p>{%$item.content%}</p>
+            </div>
+            <footer class="post-footer">
+                <div class="post-eof"></div>
+            </footer>
+        </article>
+        {%/foreach%}
+
+        <div class="tc">
+            <ul class="pagination pagination-sm">
+                <li><a href="" title="上一页"><i class="glyphicon glyphicon-chevron-left"></i></a></li>
+                <li><a href="" title="下一页"><i class="glyphicon glyphicon-chevron-right"></i></a></li>
+            </ul>
+        </div>
+    </section>
+{%include file='public/footer.html'%}

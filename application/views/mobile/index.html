@@ -1,0 +1,20 @@
+{%include file='public/header.html' title='移动开发-谢大年的博客'%}
+{%include file='public/menu.html'%}
+
+    <section class="wrapper">
+        <div class="contenter am-g am-g-fixed blog-g-fixed">
+            <div class="am-u-md-12">
+                <ol class="blog_list">
+                    {%foreach $tpl.data.article_list as $item%}
+                    <li>
+                        <a href="/blog/detail?id={%$item.id%}" target="_blank"><img src="{%$item.cover%}" alt="" width="356px" height="196px"></a>
+                        <a href="/blog/detail?id={%$item.id%}" target="_blank">{%$item.title%}</a>
+                        <span>{%$item.create_time|date_format:"%Y-%m-%d"%}</span>
+                    </li>
+                    {%/foreach%}
+                </ol>
+            </div>
+        </div>
+    </section>
+
+{%include file='public/footer.html'%}

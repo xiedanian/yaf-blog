@@ -1,0 +1,21 @@
+{%include file='public/header.html' title=$tpl.data.albumInfo.title%}
+{%include file='public/menu.html'%}
+
+<section class="wrapper">
+    <article class="markdown-body entry-content" itemprop="text">
+
+    <div class="travle_detail">
+        <h1>{%$tpl.data.albumInfo.title%}</h1>
+        <blockquote>
+            <p>{%$tpl.data.albumInfo.intro%}</p>
+        </blockquote>
+
+            {%foreach $tpl.data.albumPicsList as $item%}
+                <p><img src=" {%$item.pic_url%}" alt="{%$item.intro%}"></p>
+            {%/foreach%}
+
+    </div>
+
+    </article>
+</section>
+{%include file='public/footer.html'%}

@@ -1,0 +1,88 @@
+{%include file='admin/public/header.html'%}
+{%include file='admin/public/menu.html'%}
+
+<div class="right">
+    <div class="cdlist-list-container" data-cd-container="list">
+        <table class="table table-striped back-table">
+            <thead>
+            <tr>
+                <th><input type="checkbox" id="checkall" /> </th>
+                <th>菜单名称</th>
+                <th>是否菜单选项</th>
+                <th>URI</th>
+                <th>权重</th>
+                <th>备注</th>
+            </tr>
+            </thead>
+            <tbody id="j_tb">
+            {%foreach from=$tpl.data.list item="vo"%}
+                <tr>
+                    <td><input type="checkbox" value="{%$vo.menu_id%}" id="menu-id-{%$vo.menu_id%}"{%if $vo.is_checked eq 1%} checked{%/if%}></td>
+                    <td>{%$vo.prefix%}{%$vo.name%}</td>
+                    <td>
+                        {%if $vo.is_menu eq 1%}
+                        <span class="label label-success">Y</span>
+                        {%else%}
+                        <span class="label label-default">N</span>
+                        {%/if%}
+                    </td>
+                    <td>{%$vo.uri%}</td>
+                    <td>{%$vo.weight%}</td>
+                    <td>{%$vo.remark%}</td>
+                </tr>
+            {%/foreach%}
+            </tbody>
+        </table>
+
+        <div class="panel-footer">
+            <input type="hidden" id="roleId" name="role_id" value="{%$tpl.data.role_id%}">
+            <button type="button" class="btn btn-primary" id="save"><i class="glyphicon glyphicon-ok"></i> 保存授权</button>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $("#checkall").click(function () {
+            var isChecked = $("#checkall").prop("checked");
+            $("#j_tb input").prop("checked", isChecked);
+        });
+
+        $("#j_tb input").click(function () {
+            var allLength = $("#j_tb input").length;
+            var checkedLength = $("#j_tb input:checked").length;
+            if(allLength == checkedLength){
+                $("#checkall").prop("checked",true);
+            }else {
+                $("#checkall").prop("checked",false);
+            }
+        });
+    });
+
+    $("#save").click(function(){
+
+        var role_id = $('#roleId').val();
+        var arr =[];
+        $('#j_tb input[type=checkbox]:checked').each(function(){
+            arr.push($(this).val());
+        })
+        var menu_ids = arr.join(',');
+        var data = {"role_id":role_id,"menu_ids":menu_ids};
+        $.ajax({
+            url:"/admin/admin/rolemenuset",
+            type:'POST',
+            data:data,
+            success:function(obj){
+                if(obj.errno!=0){
+                    alert(obj.error);
+                }else{
+                    alert(obj.error);
+                    window.location.reload();
+                }
+            }
+        });
+    });
+</script>
+{%include file='public/footer.html'%}
+
