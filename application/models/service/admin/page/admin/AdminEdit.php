@@ -14,10 +14,11 @@ class Service_Admin_Page_Admin_AdminEditModel{
     }
 
     public function executePost($params){
+        $sessionInfo = visk_Session::get();
         $dsAdmin = new Service_Admin_Data_AdminModel();
         $data = [
             'email' => $params['email'],
-            'role_id' => $params['role_id'],
+            'role_id' => !empty($params['role_id']) ? $params['role_id'] : $sessionInfo['role_id'],
             'is_supper' => $params['is_supper'],
         ];
         if(isset($params['password']) && !empty($params['password'])){

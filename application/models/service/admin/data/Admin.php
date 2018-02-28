@@ -40,6 +40,7 @@ class Service_Admin_Data_AdminModel {
         ];
         $fields = [
             'admin_id',
+            'role_id',
             'email',
         ];
         $daoAdmin = new Dao_Db_AdminModel();

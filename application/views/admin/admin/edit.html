@@ -11,10 +11,10 @@
     <form class="form-container" method="POST">
         <div class="form-group">
             <span>角色</span>
-            <select class="form-control" name="role_id" style="width:600px;display: inline">
+            <select {%if $tpl.data.userInfo.role_id neq 1%}disabled{%/if%} class="form-control" name="role_id" style="width:600px;display: inline">
                 <option value="0">请选择角色</option>
                 {%foreach from=$tpl.data.roles item="vo"%}
-                    <option value="{%$vo.role_id%}"{%if $vo.role_id eq $tpl.data.admin.role_id%} selected{%/if%}>{%$vo.role_name%}</option>
+                    <option  value="{%$vo.role_id%}"{%if $vo.role_id eq $tpl.data.admin.role_id%} selected{%/if%}>{%$vo.role_name%}</option>
                 {%/foreach%}
 
             </select>
@@ -30,7 +30,7 @@
             <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="请输入密码，留空表示不修改" style="width:600px">
         </div>
 
-        {%if $tpl.data.userInfo.admin_id eq 1%}
+        {%if $tpl.data.userInfo.role_id eq 1%}
             <div class="form-group">
                 <span>超管</span>
                 <label class="radio-inline">

@@ -9,7 +9,7 @@ class AdminEditAction extends Ald_Action_Login{
     protected $_validatorPost = [
         ['admin_id', 'admin_id', 'int|required|notempty'],
         ['email', 'email', 'str|required|notempty'],
-        ['role_id', 'role_id', 'int|required|notempty'],
+        ['role_id', 'role_id', 'int'],
         ['password', 'password', 'str|required|notempty'],
         ['is_supper', 'is_supper', 'int|default[0]'],
     ];
