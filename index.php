@@ -4,6 +4,10 @@ if(isset($_GET['debug']) && 1 == $_GET['debug']){
     error_reporting(E_ALL);
 }
 date_default_timezone_set('Asia/Shanghai');
+
+define('SERVER',$_SERVER);
+define('HTTP_HOST',SERVER['HTTP_HOST']);
+
 define('DS', DIRECTORY_SEPARATOR);
 define('APP_DIR', dirname(__FILE__));
 //define('APP_NAME', basename(__DIR__));

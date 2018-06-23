@@ -9,7 +9,7 @@ class visk_Const_Define {
     const SORT = '0';  //排序默认值
     const IS_DELETED = '0';  //删除默认值
 
-    const COVER = "http://www.visk.com.cn/public/images/cover.jpg";
+    const COVER = "/public/images/cover.jpg";
 
     //阿里云OSS图片处理域名规则
     //const TRAVEL_LIST = "?x-oss-process=image/resize,m_lfit,w_560,limit_0/auto-orient,1/quality,q_90";

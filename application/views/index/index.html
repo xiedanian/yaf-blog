@@ -19,7 +19,7 @@
             </header>
             <div class="post-body">
                 {%if $item.cover neq '0'%}
-                    <a class="post-title-link" href="/blog/detail?id={%$item.id%}" target="_blank" title="{%$item.title%}"><img src="{%$item.cover%}" width="500" height="280" alt=""></a>
+                    <a class="post-title-link" href="/blog/detail?id={%$item.id%}" target="_blank" title="{%$item.title%}"><img src="{%$item.cover%}" alt="{%$item.title%}"></a>
                 {%/if%}
                 <p>{%$item.content%}</p>
             </div>
